@@ -8,7 +8,7 @@ setup(
     author = 'Ravinder Bhattoo',                   # Type in your name
     author_email = '',      # Type in your E-Mail
     url = 'https://github.com/ravinderbhattoo/GlassConversionPy',   # Provide either the link to your github or to your website
-    download_url = 'https://github.com/ravinderbhattoo/GlassConversionPy/archive/v_01.tar.gz',    # I explain this later on
+    download_url = 'https://github.com/ravinderbhattoo/GlassConversionPy/archive/v0.1.tar.gz',    # I explain this later on
     keywords = ['Conversion', 'Glass', 'Glass Science'],   # Keywords that define your package best
     install_requires=[            # I get to this in a second
             'numpy',
