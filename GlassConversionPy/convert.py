@@ -6,32 +6,47 @@ import pandas as pd
 def get_mass(name):
     return table.element(name).mass
 
-def formula2dict(formula):
+def formula2components(formula):
     dict1 = {}
-    for i in formula.split('-'):
-        k = ''
-        p = ''
-        for ind, j in enumerate(i):
-            try:
-                float(j)
-                p += j
-            except:
-                if j == '.':
+    parts = formula.split('-')
+    if len(parts)==1:
+        dict1[parts[0]] = 1.0
+    else:
+        for i in parts:
+            k = ''
+            p = ''
+            for ind, j in enumerate(i):
+                try:
+                    float(j)
                     p += j
-                else:
-                    k = i[ind:]
-                    break
-        dict1[k] = float(p)
-    return dict1
+                except:
+                    if j == '.':
+                        p += j
+                    else:
+                        k = i[ind:]
+                        break
+            dict1[k] = float(p)
+    if sum(dict1.values())==100:
+        for k,v in dict1.items():
+            dict1[k] = dict1[k]/100
+        return dict1
+    elif sum(dict1.values())==1.0:
+        return dict1
+    else:
+        try:
+            raise Exception("Invalid Formula: {}.".format(formula))
+        except Exception as e:
+            print(e)
+            raise
 
-def get_molecular_mass(formula):
-    dict1 = formula2dict(formula)
+def get_molar_mass(formula):
+    dict1 = cleanit(formula)
     s = 0
     for key, value in dict1.items():
-        s += value * molecule_mass(key) / 100
+        s += value * molar_mass(key)
     return s
 
-def molecule_mass(name):
+def molecule2atoms(name):
     name = name.strip()
     dict1 = {}
     k = ''
@@ -62,9 +77,11 @@ def molecule_mass(name):
                 float(name[-1])
             except:
                 dict1[k] = float(1.0)
-
     dict1.pop('')
+    return dict1
 
+def molar_mass(name):
+    dict1 = molecule2atoms(name)
     s = 0
     for i in dict1:
         s += dict1[i] * get_mass(i)
@@ -76,17 +93,17 @@ def cleanit(formula):
     elif type(formula)==pandas.core.frame.DataFrame:
         dict1 = formula.to_dict('list')
     else:
-        dict1 = formula2dict(formula)
+        dict1 = formula2components(formula)
     for key in dict1.keys():
         dict1[key] = np.array(dict1[key])
     return dict1
 
-def W2M(formula):
+def weight2mol(formula):
     dict1 = cleanit(formula)
     dict2 = dict1.copy()
     dict3 = dict1.copy()
     for key, value in dict1.items():
-        dict2[key] = value / molecule_mass(key)
+        dict2[key] = value / molar_mass(key)
     for key, value in dict2.items():
         dict3[key] = dict2[key] * 100 / sum(dict2.values())
     if type(formula)==pandas.core.frame.DataFrame:
@@ -95,12 +112,12 @@ def W2M(formula):
         return dict3
 
 
-def M2W(formula):
+def mol2weight(formula):
     dict1 = cleanit(formula)
     dict2 = dict1.copy()
     dict3 = dict1.copy()
     for key, value in dict1.items():
-        dict2[key] = dict1[key] * molecule_mass(key)
+        dict2[key] = dict1[key] * molar_mass(key)
     for key, value in dict2.items():
         dict3[key] = dict2[key] * 100 / sum(dict2.values())
     if type(formula)==pandas.core.frame.DataFrame:
