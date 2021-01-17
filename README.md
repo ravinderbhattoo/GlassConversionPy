@@ -1,6 +1,12 @@
 ## GlassConversionPy
 Library to do simple conversions in glass science.
 
+### Installation
+**Using pip**
+```
+pip install GlassConversionPy
+```
+
 ### Example
 ```
 import GlassConversionPy as gc
