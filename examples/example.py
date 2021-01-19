@@ -1,10 +1,14 @@
 import GlassConversionPy as gc
+import importlib
+importlib.reload(gc)
+
 import pandas as pd
 
 a = {"CaO": 50, "MgO": 10, "Al2O3": 40}
 b = {"CaO": [50], "MgO": [10], "Al2O3": [40]}
 c = "50CaO-10MgO-40Al2O3"
 df = pd.DataFrame(b)
+
 
 # mol% to weight%
 print(gc.mol2weight(a))
