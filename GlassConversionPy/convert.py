@@ -4,6 +4,8 @@ import numpy as np
 import pandas
 import pandas as pd
 
+fprecision = 2
+
 #functions and classes
 def get_mass(element):
     """Return mass of an element.
