@@ -26,3 +26,5 @@ print(gc.weight2mol(df))
 print(gc.get_molar_mass("10Na2O-10K2O-80SiO2"))
 print(gc.molar_mass("SiO2"))
 print(gc.formula2components("0.1Na2O-0.1K2O-0.8SiO2"))
+
+

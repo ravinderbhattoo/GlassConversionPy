@@ -1,5 +1,5 @@
 from distutils.core import setup
-version = '0.1.3'
+version = '0.1.4'
 
 setup(
     name = 'GlassConversionPy',         # How you named your package folder
@@ -17,7 +17,6 @@ setup(
     install_requires=[            # I get to this in a second
             'numpy',
             'pandas',
-            'mendeleev'
         ],
     classifiers=[
       'Development Status :: 5 - Production/Stable',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
